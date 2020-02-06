@@ -23,6 +23,12 @@ module.exports = function (fastify, opts, next) {
     options: Object.assign({}, opts)
   })
 
+  fastify.get('/ping', (request, reply) => {
+    reply.send({"ping":"pong"})
+  })
+
   // Make sure to call next when done
   next()
 }
+
+
