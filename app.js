@@ -1,34 +1,21 @@
 'use strict'
 
-const path = require('path')
-const AutoLoad = require('fastify-autoload')
+const fastify = require('fastify')({
+  logger: true
+})
 
-module.exports = function (fastify, opts, next) {
-  // Place here your custom code!
+const PORT = process.env.PORT || 5000
 
-  // Do not touch the following lines
+// Declare a route
+fastify.get('/ping', function (request, reply) {
+  reply.send({"ping":"pong"});
+});
 
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'plugins'),
-    options: Object.assign({}, opts)
-  })
-
-  // This loads all plugins defined in services
-  // define your routes in one of these
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'services'),
-    options: Object.assign({}, opts)
-  })
-
-  fastify.get('/ping', (request, reply) => {
-    reply.send({"ping":"pong"})
-  })
-
-  // Make sure to call next when done
-  next()
-}
-
-
+// Run the server!
+fastify.listen(PORT, '0.0.0.0', function (err, address) {
+  if (err) {
+    fastify.log.error(err)
+    process.exit(1)
+  }
+  fastify.log.info(`server listening on ${address}`)
+})
