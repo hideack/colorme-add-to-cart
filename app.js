@@ -4,7 +4,23 @@ const fastify = require('fastify')({
   logger: true
 })
 
-const PORT = process.env.PORT || 5000
+fastify.register(require('point-of-view'), {
+  engine: {
+    ejs: require('ejs')
+  }
+})
+
+const PORT    = process.env.PORT || 5000
+const ACCOUNT = process.env.ACCOUNT || 'hideack3';
+
+fastify.get('/:product', (req, reply) => {
+  fastify.log.info(req.params);
+
+  fastify.log.info(`Account: ${ACCOUNT}`)
+  fastify.log.info(`Product ID: ${req.params.product}`)
+
+  reply.view('/ejs/redirect.ejs', { account: ACCOUNT , product: req.params.product})
+})
 
 // Declare a route
 fastify.get('/ping', function (request, reply) {
