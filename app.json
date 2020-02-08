@@ -1,0 +1,12 @@
+{
+  "name": "colorme-add-to-cart",
+  "description": "Colormeshop cart start redirector",
+  "repository": "https://github.com/hideack/colorme-add-to-cart",
+  "keywords": ["colormeshop"],
+  "env": {
+    "ACCOUNT": {
+      "description": "Colormeshop ID"
+    }
+  },
+  "image": "heroku/nodejs"
+}
