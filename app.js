@@ -10,14 +10,17 @@ module.exports = fastify(async function (fastify, opts) {
   })
 
   const ACCOUNT = process.env.ACCOUNT || 'hideack3';
+  // Auto-detect custom domain vs shop-pro.jp subdomain
+  const domain = ACCOUNT.includes('.') ? ACCOUNT : `${ACCOUNT}.shop-pro.jp`;
 
   fastify.get('/:product', (req, reply) => {
     fastify.log.info(req.params);
 
     fastify.log.info(`Account: ${ACCOUNT}`)
+    fastify.log.info(`Domain: ${domain}`)
     fastify.log.info(`Product ID: ${req.params.product}`)
 
-    reply.view('/ejs/redirect.ejs', { account: ACCOUNT , product: req.params.product})
+    reply.view('/ejs/redirect.ejs', { domain: domain , product: req.params.product})
   })
 
   // Declare a route
