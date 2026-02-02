@@ -3,15 +3,15 @@
 const { test } = require('tap')
 const { build } = require('../helper')
 
-test('default root route', (t) => {
+test('ping route works', (t) => {
   t.plan(2)
   const app = build(t)
 
   app.inject({
-    url: '/'
+    url: '/ping'
   }, (err, res) => {
     t.error(err)
-    t.deepEqual(JSON.parse(res.payload), { root: true })
+    t.same(JSON.parse(res.payload), { ping: 'pong' })
   })
 })
 
