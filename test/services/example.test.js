@@ -3,15 +3,16 @@
 const { test } = require('tap')
 const { build } = require('../helper')
 
-test('example is loaded', (t) => {
-  t.plan(2)
+test('product redirect is loaded', (t) => {
+  t.plan(3)
   const app = build(t)
 
   app.inject({
-    url: '/example'
+    url: '/test-product-123'
   }, (err, res) => {
     t.error(err)
-    t.equal(res.payload, 'this is an example')
+    t.ok(res.payload.includes('hideack3.shop-pro.jp'))
+    t.ok(res.payload.includes('test-product-123'))
   })
 })
 
